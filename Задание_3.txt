@@ -1,0 +1,11 @@
+3)
+int day = 0;
+if (d1 - TRUNC(d1)) < 5:
+    day += d1 - TRUNC(d1) + 1;
+else:
+    day += 5;
+if (d2 - TRUNC(d2)) < 5:
+    day += d2 - TRUNC(d2) + 1;
+else:
+    day += 5;
+int workDays = (TRUNC(d2)-TRUNC(d1))/7*5-day

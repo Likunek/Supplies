@@ -1,0 +1,35 @@
+1)
+
+SELECT v_firm.tlgr AS firm_name, tiptr.tname AS tip_name,
+vidtc.shname AS vid_name, COUNT(*) AS count_car
+FROM pts
+LEFT JOIN v_firm ON v_firm.firmid = pts.firmid
+RIGHT JOIN tiptr ON tiptr.tid = pts.tid
+RIGHT JOIN vidtc ON vidtc.vidt = tiptr.vidt
+GROUP BY v_firm.tlgr, tiptr.tname, vidtc.shname
+
+
+2)
+
+SELECT pts.uin, SUM(dmlavt.pergr) AS cargo_value
+FROM pts
+JOIN tiptr ON tiptr.tid = pts.tid
+LEFT JOIN dmlavt ON dmlavt.uin = pts.uin
+WHERE LOWER(tiptr.prizngr) LIKE 'грузовой' 
+AND dmlavt.dataret BETWEEN ?1 AND ?2
+GROUP BY pts.uin
+ORDER BY cargo_value DESC
+
+3)
+
+SELECT pts.uin, SUM(dmlavt.tv) AS fuel_issued, 
+SUM(dmlavt.tv) - SUM(dmlavt.ts) AS fuel_deposited
+FROM pts
+LEFT JOIN dmlavt ON dmlavt.uin = pts.uin
+WHERE pts.uin = ?1
+AND dmlavt.dataret BETWEEN ?2 AND ?3
+GROUP BY pts.uin
+
+
+
+
